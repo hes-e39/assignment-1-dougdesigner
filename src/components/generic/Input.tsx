@@ -16,13 +16,13 @@ const Input: React.FC<InputProps> = ({
 
     return (
         <div className="flex space-x-4">
-            <div>
-                <label htmlFor="minutes" className="block text-sm font-medium text-white">Minutes</label>
+            <div className="flex flex-row-reverse items-center">
+                <label htmlFor="minutes" className="block text-lg font-semibold text-white">Minutes</label>
                 <select
                     id="minutes"
                     value={minutes}
                     onChange={(e) => onMinutesChange(Number.parseInt(e.target.value))}
-                    className="mt-1 block w-full bg-gray-700 border border-gray-600 text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mr-2 py-2 px-4 block w-full bg-gray-800 border border-gray-700 text-white rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-xl"
                 >
                     {minuteOptions.map((minute) => (
                         <option key={minute} value={minute}>
@@ -32,13 +32,13 @@ const Input: React.FC<InputProps> = ({
                 </select>
             </div>
 
-            <div>
-                <label htmlFor="seconds" className="block text-sm font-medium text-white">Seconds</label>
+            <div className="flex flex-row-reverse items-center">
+                <label htmlFor="seconds" className="block text-lg font-semibold text-white">Seconds</label>
                 <select
                     id="seconds"
                     value={seconds}
                     onChange={(e) => onSecondsChange(Number.parseInt(e.target.value))}
-                    className="mt-1 block w-full bg-gray-700 border border-gray-600 text-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                    className="mr-2 py-2 px-4 block w-full bg-gray-800 border border-gray-700 text-white rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-xl"
                 >
                     {secondOptions.map((second) => (
                         <option key={second} value={second}>

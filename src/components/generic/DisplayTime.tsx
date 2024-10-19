@@ -9,7 +9,7 @@ const DisplayTime: React.FC<DisplayTimeProps> = ({ minutes = 0, seconds = 0, hun
     const formatTime = (value: number, digits = 2) => value.toString().padStart(digits, '0');
 
     return (
-        <div className="text-white text-4xl p-4 bg-gray-800 rounded-lg">
+        <div className="text-white text-4xl p-4 bg-gray-900 rounded-lg">
             {formatTime(minutes)}:{formatTime(seconds)}.{formatTime(hundredths)}
         </div>
     );

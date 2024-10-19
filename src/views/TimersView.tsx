@@ -12,7 +12,6 @@ const Timers = styled.div`
 `;
 
 const Timer = styled.div`
-  border: 1px solid gray;
   padding: 20px;
   margin: 10px;
   font-size: 1.5rem;
@@ -32,7 +31,7 @@ const TimersView = () => {
     <Timers>
       {timers.map((timer) => (
         <Timer key={`timer-${timer.title}`}>
-          <TimerTitle>{timer.title}</TimerTitle>
+          <TimerTitle className="mb-4 font-semibold">{timer.title}</TimerTitle>
           {timer.C}
         </Timer>
       ))}

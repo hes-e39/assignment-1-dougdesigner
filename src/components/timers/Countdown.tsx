@@ -11,12 +11,14 @@ const Countdown = () => {
     return (
         <div>
             <DisplayTime />
+            <br />
             <Input 
                 minutes={minutes} 
                 seconds={seconds} 
                 onMinutesChange={setMinutes} 
                 onSecondsChange={setSeconds} 
             />
+            <br />
             <Button type="start" />
             <Button type="pause" />
             <Button type="resume" />
