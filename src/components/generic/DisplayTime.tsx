@@ -6,7 +6,7 @@ interface DisplayTimeProps {
 
 const DisplayTime: React.FC<DisplayTimeProps> = ({ minutes = 0, seconds = 0, hundredths = 0 }) => {
     // Ensure two digits for minutes, seconds, annd miliseconds
-    const formatTime = (value: number, digits: number = 2) => value.toString().padStart(digits, '0');
+    const formatTime = (value: number, digits = 2) => value.toString().padStart(digits, '0');
 
     return (
         <div className="text-white text-4xl p-4 bg-gray-800 rounded-lg">
