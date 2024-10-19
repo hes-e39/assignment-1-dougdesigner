@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({
                     id="minutes"
                     value={minutes}
                     onChange={(e) => onMinutesChange(Number.parseInt(e.target.value))}
-                    className="mr-2 py-2 px-4 block w-full bg-gray-800 border border-gray-700 text-white rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-xl"
+                    className="mr-2 py-2 px-4 block w-full bg-gray-800 border-2 border-gray-700 text-white rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-xl"
                 >
                     {minuteOptions.map((minute) => (
                         <option key={minute} value={minute}>
@@ -38,7 +38,7 @@ const Input: React.FC<InputProps> = ({
                     id="seconds"
                     value={seconds}
                     onChange={(e) => onSecondsChange(Number.parseInt(e.target.value))}
-                    className="mr-2 py-2 px-4 block w-full bg-gray-800 border border-gray-700 text-white rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-xl"
+                    className="mr-2 py-2 px-4 block w-full bg-gray-800 border-2 border-gray-700 text-white rounded-lg shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-xl"
                 >
                     {secondOptions.map((second) => (
                         <option key={second} value={second}>
