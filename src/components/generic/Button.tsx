@@ -24,14 +24,6 @@ const Button: React.FC<ButtonProps> = ({type, onClick, disabled = false }) => {
         fastforward: 'Fast Forward ⏭',
     };
 
-    // const icon = {
-    //     start: '▶',
-    //     pause: 'Pause',
-    //     resume: '▶',
-    //     reset: '↺',
-    //     fastforward: 'End',
-    // };
-
     return (
         <button
             onClick={onClick || (() => {})}

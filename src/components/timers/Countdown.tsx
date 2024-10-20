@@ -11,32 +11,38 @@ const Countdown = () => {
     const [totalMilliseconds, setTotalMilliseconds] = useState(0);
     const [isRunning, setIsRunning] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
+    const [isCompleted, setIsCompleted] = useState(false);
     const intervalRef = useRef<number | null>(null);
 
+    // Time functions
+    const getMinutes = () => Math.floor(totalMilliseconds / 60000);
+    const getSeconds = () => Math.floor((totalMilliseconds % 60000) / 1000);
+    const getHundredths = () => Math.floor((totalMilliseconds % 1000) / 10);
+
     // Display time functions
-    const getMinutes = () => {
+    const getDisplayMinutes = () => {
         if (totalMilliseconds === 0 && !isRunning) {
             return 0;
         }
         if (isRunning || totalMilliseconds > 0) {
-            return Math.floor(totalMilliseconds / 60000);
+            return getMinutes();
         }
         return inputMinutes;
     };
 
-    const getSeconds = () => {
+    const getDisplaySeconds = () => {
         if (totalMilliseconds === 0 && !isRunning) {
             return 0;
         }
         if (isRunning || totalMilliseconds > 0) {
-            return Math.floor((totalMilliseconds % 60000) / 1000);
+            return getSeconds();
         }
         return inputSeconds;
     };
 
-    const getHundredths = () => {
+    const getDisplayHundredths = () => {
         if (isRunning) {
-            return Math.floor((totalMilliseconds % 1000) / 10);
+            return getHundredths();
         }
         return 0;
     };
@@ -45,6 +51,7 @@ const Countdown = () => {
     const resetTimer = () => {
         setIsRunning(false);
         setIsPaused(false);
+        setIsCompleted(false);
         const resetTotalMilliseconds = (inputMinutes * 60000) + (inputSeconds * 1000);
         setTotalMilliseconds(resetTotalMilliseconds);
         if (intervalRef.current) clearInterval(intervalRef.current);
@@ -56,7 +63,8 @@ const Countdown = () => {
             if (prevMilliseconds > 0) {
                 return prevMilliseconds - 10;
             } else {
-                resetTimer();
+                setIsCompleted(true);
+                if (intervalRef.current) clearInterval(intervalRef.current);
                 return 0;
             }
         });
@@ -64,7 +72,7 @@ const Countdown = () => {
 
     // Start timer function
     const startTimer = () => {
-        if (!isRunning) {
+        if (!isRunning && !isCompleted) {
             const startTotalMilliseconds = (inputMinutes * 60000) + (inputSeconds * 1000);
             setTotalMilliseconds(startTotalMilliseconds);
             setIsRunning(true);
@@ -90,6 +98,7 @@ const Countdown = () => {
     // Fast forward timer function
     const fastForwardTimer = () => {
         setTotalMilliseconds(0);
+        setIsCompleted(true);
         if (intervalRef.current) clearInterval(intervalRef.current);
         setIsRunning(false);
         setIsPaused(false);
@@ -126,9 +135,9 @@ const Countdown = () => {
 
             <div className="w-full flex justify-center">
                 <DisplayTime 
-                    minutes={getMinutes()}
-                    seconds={getSeconds()}
-                    hundredths={getHundredths()} />
+                    minutes={getDisplayMinutes()}
+                    seconds={getDisplaySeconds()}
+                    hundredths={getDisplayHundredths()} />
             </div>
 
             <div className="w-full flex justify-center">
@@ -137,21 +146,29 @@ const Countdown = () => {
                     seconds={inputSeconds} 
                     onMinutesChange={handleMinutesChange} 
                     onSecondsChange={handleSecondsChange}
-                    disabled={isRunning || isPaused} 
+                    disabled={isRunning || isPaused || isCompleted} 
                 />
             </div>
            
             <div className="flex flex-col w-full space-y-4">
-                {isRunning && !isPaused ? (
-                    <Button type="pause" onClick={pauseTimer} />
-                ) : isRunning && isPaused ? (
-                    <Button type="resume" onClick={resumeTimer} />
-                ) : (
-                    <Button type="start" onClick={startTimer} />
+                {!isCompleted && (
+                    <>
+                        {isRunning && !isPaused ? (
+                            <Button type="pause" onClick={pauseTimer} />
+                        ) : isRunning && isPaused ? (
+                            <Button type="resume" onClick={resumeTimer} />
+                        ) : totalMilliseconds > 0 ? (
+                            <Button type="start" onClick={startTimer} />
+                        ) : null}
+                    </>
                 )}
 
-                <Button type="reset" onClick={resetTimer} />
-                <Button type="fastforward" onClick={fastForwardTimer} />
+                {(isRunning || isPaused || isCompleted) && (
+                    <Button type="reset" onClick={resetTimer} />
+                )}
+                {isRunning && !isCompleted && (
+                    <Button type="fastforward" onClick={fastForwardTimer} />
+                )}
             </div>
         </Panel>
     );
