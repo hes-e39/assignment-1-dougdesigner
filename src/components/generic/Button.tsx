@@ -17,11 +17,11 @@ const Button: React.FC<ButtonProps> = ({type, onClick, disabled = false }) => {
     const disabledStyle = 'bg-gray-700 text-gray-400 cursor-not-allowed';
 
     const label = {
-        start: 'Start',
-        pause: 'Pause',
-        resume: 'Resume',
-        reset: 'Reset',
-        fastforward: 'End',
+        start: 'Start ▶',
+        pause: 'Pause ⏸',
+        resume: 'Resume ▶',
+        reset: 'Reset ↺',
+        fastforward: 'Fast Forward ⏭',
     };
 
     // const icon = {
@@ -36,7 +36,7 @@ const Button: React.FC<ButtonProps> = ({type, onClick, disabled = false }) => {
         <button
             onClick={onClick || (() => {})}
             disabled={disabled}
-            className={`py-2 px-4 rounded-full text-lg font-semibold transition-all duration-200 ${disabled ? disabledStyle : buttonStyles[type]}`}>
+            className={`py-2 px-4 rounded-full w-full text-lg font-semibold transition-all duration-200 ${disabled ? disabledStyle : buttonStyles[type]}`}>
             {label[type]}
         </button>
     );
