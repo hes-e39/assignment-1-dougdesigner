@@ -14,6 +14,8 @@ const Countdown = () => {
     const [isCompleted, setIsCompleted] = useState(false);
     const intervalRef = useRef<number | null>(null);
 
+    const targetMilliseconds = (inputMinutes * 60000) + (inputSeconds * 1000);
+
     // Time functions
     const getMinutes = () => Math.floor(totalMilliseconds / 60000);
     const getSeconds = () => Math.floor((totalMilliseconds % 60000) / 1000);
@@ -52,8 +54,7 @@ const Countdown = () => {
         setIsRunning(false);
         setIsPaused(false);
         setIsCompleted(false);
-        const resetTotalMilliseconds = (inputMinutes * 60000) + (inputSeconds * 1000);
-        setTotalMilliseconds(resetTotalMilliseconds);
+        setTotalMilliseconds(targetMilliseconds);
         if (intervalRef.current) clearInterval(intervalRef.current);
     };
 
@@ -73,8 +74,7 @@ const Countdown = () => {
     // Start timer function
     const startTimer = () => {
         if (!isRunning && !isCompleted) {
-            const startTotalMilliseconds = (inputMinutes * 60000) + (inputSeconds * 1000);
-            setTotalMilliseconds(startTotalMilliseconds);
+            setTotalMilliseconds(targetMilliseconds);
             setIsRunning(true);
             setIsPaused(false);
             intervalRef.current = window.setInterval(tick, 10);
@@ -120,6 +120,11 @@ const Countdown = () => {
         }
     };
 
+    // Check if input is valid
+    const inputValid = () => {
+        return (inputMinutes > 0 || inputSeconds > 0);
+    };
+
     // Clear interval on unmount
     useEffect(() => {
         return () => {
@@ -157,7 +162,7 @@ const Countdown = () => {
                             <Button type="pause" onClick={pauseTimer} />
                         ) : isRunning && isPaused ? (
                             <Button type="resume" onClick={resumeTimer} />
-                        ) : totalMilliseconds > 0 ? (
+                        ) : inputValid() ? (
                             <Button type="start" onClick={startTimer} />
                         ) : null}
                     </>

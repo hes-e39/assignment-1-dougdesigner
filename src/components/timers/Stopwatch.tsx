@@ -85,6 +85,11 @@ const Stopwatch = () => {
         setInputSeconds(seconds);
     };
 
+    // Check if input is valid
+    const inputValid = () => {
+        return (inputMinutes > 0 || inputSeconds > 0);
+    };
+
     useEffect(() => {
         return () => {
             if (intervalRef.current) clearInterval(intervalRef.current);
@@ -122,9 +127,9 @@ const Stopwatch = () => {
                             <Button type="pause" onClick={pauseTimer} />
                         ) : isRunning && isPaused ? (
                             <Button type="resume" onClick={resumeTimer} />
-                        ) : (
+                        ) : inputValid() ? (
                             <Button type="start" onClick={startTimer} />
-                        )}
+                        ) : null}
                     </>
                 )}
 
