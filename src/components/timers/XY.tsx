@@ -66,7 +66,6 @@ const XY = () => {
         currentRoundRef.current = 1;
         setTotalMilliseconds(targetMilliseconds);
         setIsRunning(true);
-        setIsPaused(false);
         intervalRef.current = window.setInterval(tick, 10);
     };
 

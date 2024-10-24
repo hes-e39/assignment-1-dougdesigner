@@ -74,7 +74,6 @@ const Countdown = () => {
     const startTimer = () => {
         setTotalMilliseconds(targetMilliseconds);
         setIsRunning(true);
-        setIsPaused(false);
         intervalRef.current = window.setInterval(tick, 10);
     };
 

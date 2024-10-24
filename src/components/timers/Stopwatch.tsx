@@ -37,7 +37,6 @@ const Stopwatch = () => {
     const startTimer = () => {
         setTotalMilliseconds(0);
         setIsRunning(true);
-        setIsPaused(false);
         intervalRef.current = setInterval(tick, 10);
     };
 
