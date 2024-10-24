@@ -27,9 +27,7 @@ const Stopwatch = () => {
             if (prevMilliseconds < targetMilliseconds) {
                 return prevMilliseconds + 10;
             } else {
-                setIsRunning(false);
-                setIsCompleted(true);
-                if (intervalRef.current) clearInterval(intervalRef.current);
+                fastForwardTimer();
                 return prevMilliseconds;
             }
         });
@@ -37,12 +35,10 @@ const Stopwatch = () => {
 
     // Start timer function
     const startTimer = () => {
-        if (!isRunning && !isCompleted) {
-            setTotalMilliseconds(0);
-            setIsRunning(true);
-            setIsPaused(false);
-            intervalRef.current = setInterval(tick, 10);
-        }
+        setTotalMilliseconds(0);
+        setIsRunning(true);
+        setIsPaused(false);
+        intervalRef.current = setInterval(tick, 10);
     };
 
     // Pause timer function
@@ -53,10 +49,8 @@ const Stopwatch = () => {
 
     // Resume timer function
     const resumeTimer = () => {
-        if (isPaused)  {
-            setIsPaused(false);
-            intervalRef.current = setInterval(tick, 10);
-        }
+        setIsPaused(false);
+        intervalRef.current = setInterval(tick, 10);
     };
 
     // Fast forward timer function
@@ -124,13 +118,15 @@ const Stopwatch = () => {
             <div className="flex flex-col w-full space-y-4">
                 {!isCompleted && (
                     <>
-                        {isRunning && !isPaused ? (
-                            <Button type="pause" onClick={pauseTimer} />
-                        ) : isRunning && isPaused ? (
-                            <Button type="resume" onClick={resumeTimer} />
-                        ) : inputValid() ? (
-                            <Button type="start" onClick={startTimer} />
-                        ) : null}
+                        {isRunning ? (
+                            isPaused ? (
+                                <Button type="resume" onClick={resumeTimer} />
+                            ) : (
+                                <Button type="pause" onClick={pauseTimer} />
+                            )
+                        ) : (
+                            inputValid() && <Button type="start" onClick={startTimer} />
+                        )}
                     </>
                 )}
 

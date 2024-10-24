@@ -56,22 +56,18 @@ const XY = () => {
                 }, 100); // Delay to smooth the UI update
             } else {
                 // If all rounds are complete, stop the timer
-                setIsCompleted(true);
-                clearInterval(intervalRef.current as number);
-                setIsRunning(false);
+                fastForwardTimer();
             }
         }
     }, [totalMilliseconds, isRunning, rounds, targetMilliseconds]);
 
     // Start timer function
     const startTimer = () => {
-        if (!isRunning && !isCompleted) {
-            currentRoundRef.current = 1;
-            setTotalMilliseconds(targetMilliseconds);
-            setIsRunning(true);
-            setIsPaused(false);
-            intervalRef.current = window.setInterval(tick, 10);
-        }
+        currentRoundRef.current = 1;
+        setTotalMilliseconds(targetMilliseconds);
+        setIsRunning(true);
+        setIsPaused(false);
+        intervalRef.current = window.setInterval(tick, 10);
     };
 
     // Pause timer function
@@ -82,10 +78,8 @@ const XY = () => {
 
     // Resume timer function
     const resumeTimer = () => {
-        if (isPaused) {
-            setIsPaused(false);
-            intervalRef.current = window.setInterval(tick, 10);
-        }
+        setIsPaused(false);
+        intervalRef.current = window.setInterval(tick, 10);
     };
 
     // Fast forward timer function
@@ -158,15 +152,17 @@ const XY = () => {
 
 
             <div className="flex flex-col w-full space-y-4">
-                {!isCompleted && (  
+                {!isCompleted && (
                     <>
-                        {isRunning && !isPaused ? (
-                            <Button type="pause" onClick={pauseTimer} />
-                        ) : isRunning && isPaused ? (
-                            <Button type="resume" onClick={resumeTimer} />
-                        ) : inputValid() ? (
-                            <Button type="start" onClick={startTimer} />
-                        ) : null}
+                        {isRunning ? (
+                            isPaused ? (
+                                <Button type="resume" onClick={resumeTimer} />
+                            ) : (
+                                <Button type="pause" onClick={pauseTimer} />
+                            )
+                        ) : (
+                            inputValid() && <Button type="start" onClick={startTimer} />
+                        )}
                     </>
                 )}
 
