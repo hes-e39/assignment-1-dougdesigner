@@ -27,6 +27,7 @@ const Stopwatch = () => {
             if (prevMilliseconds < targetMilliseconds) {
                 return prevMilliseconds + 10;
             } else {
+                setIsRunning(false);
                 setIsCompleted(true);
                 if (intervalRef.current) clearInterval(intervalRef.current);
                 return prevMilliseconds;

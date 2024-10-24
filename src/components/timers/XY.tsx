@@ -14,7 +14,7 @@ const XY = () => {
     const [isRunning, setIsRunning] = useState(false);
     const [isPaused, setIsPaused] = useState(false);
     const [isCompleted, setIsCompleted] = useState(false);
-    const [currentRound, setCurrentRound] = useState(1);
+    const currentRoundRef = useRef<number>(1);
     const intervalRef = useRef<number | null>(null);
 
     const targetMilliseconds = (inputMinutes * 60000) + (inputSeconds * 1000);
@@ -29,7 +29,7 @@ const XY = () => {
         setIsRunning(false);
         setIsPaused(false);
         setIsCompleted(false);
-        setCurrentRound(1);
+        currentRoundRef.current = 1;
         setTotalMilliseconds(targetMilliseconds);
         if (intervalRef.current) clearInterval(intervalRef.current);
     };
@@ -39,20 +39,34 @@ const XY = () => {
         setTotalMilliseconds((prevMilliseconds) => {
             if (prevMilliseconds > 0) {
                 return prevMilliseconds - 10;
-            } else if (currentRound < rounds) {
-                setCurrentRound((prevRound) => prevRound + 1);
-                return targetMilliseconds;
             } else {
-                setIsCompleted(true);
-                clearInterval(intervalRef.current as number);
-                return 0;
+                return 0; // Return 0 to stop the countdown
             }
         });
     };
 
+    // Watch for when the timer reaches zero and handle round changes
+    useEffect(() => {
+        if (isRunning && totalMilliseconds === 0) {
+            if (currentRoundRef.current < rounds) {
+                // Move to the next round
+                setTimeout(() => {
+                    currentRoundRef.current += 1;
+                    setTotalMilliseconds(targetMilliseconds); // Reset timer for the next round
+                }, 100); // Delay to smooth the UI update
+            } else {
+                // If all rounds are complete, stop the timer
+                setIsCompleted(true);
+                clearInterval(intervalRef.current as number);
+                setIsRunning(false);
+            }
+        }
+    }, [totalMilliseconds, isRunning, rounds, targetMilliseconds]);
+
     // Start timer function
     const startTimer = () => {
         if (!isRunning && !isCompleted) {
+            currentRoundRef.current = 1;
             setTotalMilliseconds(targetMilliseconds);
             setIsRunning(true);
             setIsPaused(false);
@@ -78,7 +92,7 @@ const XY = () => {
     const fastForwardTimer = () => {
         setTotalMilliseconds(0);
         setIsCompleted(true);
-        setCurrentRound(rounds);
+        currentRoundRef.current = rounds;
         if (intervalRef.current) clearInterval(intervalRef.current);
         setIsRunning(false);
         setIsPaused(false);
@@ -128,7 +142,7 @@ const XY = () => {
                 />
             </div>
 
-            <DisplayRounds rounds={rounds} currentRound={currentRound} />
+            <DisplayRounds rounds={rounds} currentRound={currentRoundRef.current} />
 
             <div className="w-full flex justify-center">
                 <Input 

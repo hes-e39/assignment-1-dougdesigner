@@ -64,6 +64,7 @@ const Countdown = () => {
             if (prevMilliseconds > 0) {
                 return prevMilliseconds - 10;
             } else {
+                setIsRunning(false);
                 setIsCompleted(true);
                 if (intervalRef.current) clearInterval(intervalRef.current);
                 return 0;
