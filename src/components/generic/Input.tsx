@@ -22,7 +22,7 @@ const Input: React.FC<InputProps> = ({
     const roundOptions = Array.from({ length: 10 }, (_, i) => i + 1);
 
     return (
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 mt-8">
 
             {/* Minutes input */}
             <div className="flex flex-row-reverse items-center">

@@ -14,7 +14,7 @@ const Panel: React.FC<PanelProps> = ({ title, description, children }) => {
                         <p>{description}</p>
                     </div>
                 )}
-                <div className="mt-2 space-y-5">
+                <div className="mt-2">
                     {children}
                 </div>
             </div>

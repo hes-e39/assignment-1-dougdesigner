@@ -137,6 +137,8 @@ const XY = () => {
 
             <DisplayRounds rounds={rounds} currentRound={currentRoundRef.current} />
 
+            <hr className="border-slate-700" />
+
             <div className="w-full flex justify-center">
                 <Input 
                     minutes={inputMinutes}
@@ -150,7 +152,7 @@ const XY = () => {
             </div>
 
 
-            <div className="flex flex-col w-full space-y-4">
+            <div className="flex flex-col w-full space-y-4 mt-5">
                 {!isCompleted && (
                     <>
                         {isRunning ? (

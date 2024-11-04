@@ -157,10 +157,13 @@ const Tabata = () => {
                 />
             </div>
 
-            <DisplayRest mode={timerMode} />
+            <div className="flex justify-center">
+                <DisplayRest mode={timerMode} />
+                <DisplayRounds rounds={rounds} currentRound={currentRoundRef.current} />  
+            </div>
 
-            <DisplayRounds rounds={rounds} currentRound={currentRoundRef.current} />    
-
+            <hr className="border-slate-700" />
+               
             <div className="w-full flex justify-center">
                 <TabataInput
                     workMinutes={inputWorkMinutes}
@@ -177,7 +180,7 @@ const Tabata = () => {
                 />
             </div>  
 
-            <div className="flex flex-col w-full space-y-4">
+            <div className="flex flex-col w-full space-y-4 mt-5">
                 {!isCompleted && (
                     <>
                         {isRunning ? (

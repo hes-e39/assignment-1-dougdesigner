@@ -30,7 +30,7 @@ const TabataInput: React.FC<TabataInputProps> = ({
     const roundOptions = Array.from({ length: 10 }, (_, i) => i + 1);
 
     return (
-        <div className="flex flex-col space-y-4 items-center">
+        <div className="flex flex-col space-y-4 items-center mt-8">
             <div className="flex space-x-4">
                 <h1 className="text-lg font-semibold text-white self-center">Work:</h1>
                 <div className="flex flex-row-reverse items-center">
